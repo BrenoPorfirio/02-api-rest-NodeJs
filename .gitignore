@@ -1,4 +1,4 @@
-tmp/app.db
+db/app.db
 
 # dependencies
 /node_modules
