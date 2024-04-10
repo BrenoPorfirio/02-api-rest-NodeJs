@@ -1,4 +1,4 @@
-import { test, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { execSync } from 'node:child_process'
 import request from 'supertest'
 import { app } from '../src/app'
@@ -13,11 +13,11 @@ describe('Transactions routes', () => {
   })
 
   beforeEach(() => {
-    execSync('npx ts-node ./node_modules/.bin/knex migrate:rollback --all')
-    execSync('npx ts-node ./node_modules/.bin/knex migrate:latest')
+    execSync('npm run knex migrate:rollback --all')
+    execSync('npm run knex migrate:latest')
   })
 
-  test('user can create a new transaction', async () => {
+  it('should be able to create a new transaction', async () => {
     await request(app.server)
       .post('/transactions')
       .send({
@@ -28,7 +28,7 @@ describe('Transactions routes', () => {
       .expect(201)
   })
 
-  test('user can list all transactions', async () => {
+  it('should be able to list all transactions', async () => {
     const createTransactionResponse = await request(app.server)
       .post('/transactions')
       .send({
@@ -52,7 +52,7 @@ describe('Transactions routes', () => {
     ])
   })
 
-  test('user can list a specific transaction', async () => {
+  it('should be able to get a specific transaction', async () => {
     const createTransactionResponse = await request(app.server)
       .post('/transactions')
       .send({
@@ -83,7 +83,7 @@ describe('Transactions routes', () => {
     )
   })
 
-  test('user can get the summary', async () => {
+  it('should be able to get the summary', async () => {
     const createTransactionResponse = await request(app.server)
       .post('/transactions')
       .send({
